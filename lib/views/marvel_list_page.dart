@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../controller/marvel_controller.dart';
 
-
-
 class MarvelListPage extends StatefulWidget {
-  const MarvelListPage({Key? key}) : super(key: key);
-
   @override
   State<MarvelListPage> createState() => _MarvelListPageState();
 }
 
 class _MarvelListPageState extends State<MarvelListPage> {
+  final TextEditingController _searchController = TextEditingController();
   late final MarvelController controller;
 
   @override
   void initState() {
     controller = context.read<MarvelController>();
-    controller.getData();
+    controller.getData(query: '');
     super.initState();
   }
 
@@ -26,54 +22,110 @@ class _MarvelListPageState extends State<MarvelListPage> {
   Widget build(BuildContext context) {
     MarvelController provider = Provider.of<MarvelController>(context);
     return Scaffold(
-        body: ListView.builder(
-            itemCount: provider.lista.length,
-            itemBuilder: (context, index) {
-              var lista = provider.lista[index];
-              return Card(
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.black54,
-                        ),
-                        child: Image.network(
-                          lista.coverUrl.toString(),
-                          fit: BoxFit.cover,
-                        ),
+        body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 80),
+          const Text(
+            'Movies',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 20),
+          SearchBar(),
+          Expanded(
+            child: ListView.builder(
+                itemCount: provider.lista.length,
+                itemBuilder: (context, index) {
+                  var lista = provider.lista[index];
+                  return Card(
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 200,
+                            decoration: const BoxDecoration(
+                              color: Colors.black54,
+                            ),
+                            child: Image.network(
+                              lista.coverUrl.toString(),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                lista.title.toString(),
-                                style: TextStyle(fontSize: 24),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
                               ),
-                              Text(lista.releaseDate.toString(),
-                                style: TextStyle(fontSize: 20),),
-                              Text(lista.duration.toString()),
-                              Text(lista.directedBy.toString()),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }));
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    lista.title.toString(),
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    lista.releaseDate.toString(),
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  Text(
+                                    lista.duration.toString(),
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  Text(
+                                    lista.directedBy.toString(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ],
+      ),
+    ));
+  }
+
+  TextField SearchBar() {
+    return TextField(
+      onChanged: buscar,
+      decoration: InputDecoration(
+          hintText: 'Pesquisar Filmes',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          prefixIcon: IconButton(
+            onPressed: () {
+              controller.getData(query: _searchController.text);
+            },
+            icon: const Icon(Icons.search),
+          )),
+      controller: _searchController,
+    );
+  }
+
+  String? buscar(String query) {
+    if (query.isEmpty) {
+      controller.getData(query: '');
+    } else {
+      controller.getData(query: _searchController.text);
+    }
+    return null;
   }
 }
