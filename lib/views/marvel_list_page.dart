@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:marvel/views/details_page.dart';
 import 'package:provider/provider.dart';
 import '../controller/marvel_controller.dart';
+
+
 
 class MarvelListPage extends StatefulWidget {
   @override
@@ -42,56 +45,64 @@ class _MarvelListPageState extends State<MarvelListPage> {
                 itemCount: provider.lista.length,
                 itemBuilder: (context, index) {
                   var lista = provider.lista[index];
-                  return Card(
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 200,
-                            decoration: const BoxDecoration(
-                              color: Colors.black54,
-                            ),
-                            child: Image.network(
-                              lista.coverUrl.toString(),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(
+                          context, MaterialPageRoute(
+                          builder: (context)=>DetailsPage(
+                              data: lista)));
+                    },
+                    child: Card(
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 200,
+                              decoration: const BoxDecoration(
+                                color: Colors.black54,
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    lista.title.toString(),
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    lista.releaseDate.toString(),
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  Text(
-                                    lista.duration.toString(),
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                  Text(
-                                    lista.directedBy.toString(),
-                                    style: const TextStyle(fontSize: 12),
-                                  ),
-                                ],
+                              child: Image.network(
+                                lista.coverUrl.toString(),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          )
-                        ],
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      lista.title.toString(),
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      lista.releaseDate.toString(),
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    Text(
+                                      lista.duration.toString(),
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                    Text(
+                                      lista.directedBy.toString(),
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
