@@ -1,92 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:marvel/constants/string_constants.dart';
 import '../data/models/marvel_models.dart';
 
 class DetailsPage extends StatefulWidget {
-  Data data;
+  Data? data;
 
-  DetailsPage({required this.data});
+  DetailsPage({Key? key, required this.data}) : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  late VideoPlayerController controller;
-
-  @override
-  void initState() {
-    loadVideoPlayer();
-    super.initState();
-  }
-
-  loadVideoPlayer() {
-    controller =
-        VideoPlayerController.network(widget.data.trailerUrl.toString());
-    controller.addListener(() {
-      setState(() {});
-    });
-    controller.initialize().then((value) {
-      setState(() {});
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Description'),
+        elevation: 0,
+        title: Text(widget.data!.title.toString()),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(children: [
-              const SizedBox(height: 30),
-              SizedBox(
-                  height: 250, child: Text(widget.data.overview.toString())),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 10,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
               Container(
-                height: 200,
-                child: AspectRatio(
-                  aspectRatio: controller.value.aspectRatio,
-                  child: VideoPlayer(controller),
+                height: 350,
+                width: double.infinity,
+                child: Image.network(
+                  widget.data!.coverUrl.toString(),
+                  fit: BoxFit.fill,
                 ),
               ),
-              Text("Total Duration: ${controller.value.duration}"),
-              VideoProgressIndicator(controller,
-                  allowScrubbing: true,
-                  colors: const VideoProgressColors(
-                    backgroundColor: Colors.redAccent,
-                    playedColor: Colors.green,
-                    bufferedColor: Colors.purple,
-                  )),
-              Container(
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          if (controller.value.isPlaying) {
-                            controller.pause();
-                          } else {
-                            controller.play();
-                          }
+              const SizedBox(height: 30),
+              Text(widget.data!.overview.toString()),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  const Text(StringConstants.duration),
+                  Text(
+                    widget.data!.duration.toString(),
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(StringConstants.minutes),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  const Text(StringConstants.directed),
+                  Text(widget.data!.directedBy.toString()),
+                ],
+              ),
 
-                          setState(() {});
-                        },
-                        icon: Icon(controller.value.isPlaying
-                            ? Icons.pause
-                            : Icons.play_arrow)),
-                    IconButton(
-                        onPressed: () {
-                          controller.seekTo(Duration(seconds: 0));
-
-                          setState(() {});
-                        },
-                        icon: Icon(Icons.stop))
-                  ],
-                ),
-              )
-            ])),
+            ],
+          ),
+        ),
       ),
     );
   }

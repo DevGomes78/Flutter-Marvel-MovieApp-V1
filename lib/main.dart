@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/views/home_page.dart';
 import 'package:provider/provider.dart';
-
 import 'controller/marvel_controller.dart';
 
 
