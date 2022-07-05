@@ -29,7 +29,7 @@ class _DetailsPageState extends State<DetailsPage> {
           child: Column(
             children: [
               const SizedBox(height: 10),
-              Container(
+              SizedBox(
                 height: 350,
                 width: double.infinity,
                 child: Image.network(
@@ -60,7 +60,6 @@ class _DetailsPageState extends State<DetailsPage> {
                   Text(widget.data!.directedBy.toString()),
                 ],
               ),
-
             ],
           ),
         ),

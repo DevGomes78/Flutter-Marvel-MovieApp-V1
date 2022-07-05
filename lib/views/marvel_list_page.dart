@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel/data/models/marvel_models.dart';
 import 'package:marvel/views/details_page.dart';
@@ -23,10 +24,12 @@ class _MarvelListPageState extends State<MarvelListPage> {
     loadData();
     super.initState();
   }
-  loadData(){
+
+  loadData() {
     controller = context.read<MarvelController>();
     controller.getData(query: '');
   }
+
   @override
   Widget build(BuildContext context) {
     MarvelController provider = Provider.of<MarvelController>(context);
@@ -79,8 +82,22 @@ class _MarvelListPageState extends State<MarvelListPage> {
                 decoration: const BoxDecoration(
                   color: Colors.black54,
                 ),
-                child: Image.network(
-                  lista.coverUrl.toString(),
+                child: Image(
+                  image: CachedNetworkImageProvider(
+                    lista.coverUrl.toString(),
+                    maxHeight: 200,
+                    maxWidth: 150,
+                  ),
+                  loadingBuilder: (context, child, progress) {
+                    if (progress == null) {
+                      return child;
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
                   fit: BoxFit.cover,
                 ),
               ),
@@ -130,7 +147,6 @@ class _MarvelListPageState extends State<MarvelListPage> {
       setState(() {
         controller.getData(query: '');
       });
-
     } else {
       controller.getData(query: _searchController.text);
     }

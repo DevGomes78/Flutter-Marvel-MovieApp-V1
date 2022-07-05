@@ -37,6 +37,7 @@ dependencies:
   provider:
   http:
   video_player:
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:
