@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:marvel/data/models/marvel_models.dart';
 import 'package:marvel/views/details_page.dart';
+import 'package:marvel/views/shimer_page.dart';
 import 'package:provider/provider.dart';
 import '../components/text_style.dart';
 import '../constants/string_constants.dart';
@@ -17,17 +18,25 @@ class MarvelListPage extends StatefulWidget {
 class _MarvelListPageState extends State<MarvelListPage> {
   final TextEditingController _searchController = TextEditingController();
   late final MarvelController controller;
+  bool isLoading = false;
   var lista;
 
   @override
   void initState() {
-    loadData();
+    setState(() {
+      loadUser();
+    });
     super.initState();
   }
 
-  loadData() {
+  Future loadUser() async {
+    setState(() => isLoading = true);
+    await Future.delayed(
+      const Duration(seconds: 3),
+    );
     controller = context.read<MarvelController>();
     controller.getData(query: '');
+    setState(() => isLoading = false);
   }
 
   @override
@@ -47,15 +56,18 @@ class _MarvelListPageState extends State<MarvelListPage> {
           const SizedBox(height: 20),
           SearchBar(),
           Expanded(
-            child: ListView.builder(
-                itemCount: provider.lista.length,
-                itemBuilder: (context, index) {
-                  provider.lista.isEmpty
-                      ? const Center(child: CircularProgressIndicator())
-                      : lista = provider.lista[index];
-                  return marvelList(context, lista);
-                }),
-          ),
+              child: ListView.builder(
+                  itemCount: isLoading ? 2 : provider.lista.length,
+                  itemBuilder: (context, index) {
+                    if (isLoading) {
+                      return const Skeleton().buildListView();
+                    } else {
+                      provider.lista.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : lista = provider.lista[index];
+                      return marvelList(context, lista);
+                    }
+                  })),
         ],
       ),
     ));

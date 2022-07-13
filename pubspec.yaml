@@ -36,8 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider:
   http:
-  video_player:
   cached_network_image:
+  url_launcher:
+  shimmer:
 
 dev_dependencies:
   flutter_test:
