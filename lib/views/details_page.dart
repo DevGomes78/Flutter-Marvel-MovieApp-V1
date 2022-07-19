@@ -102,7 +102,7 @@ class _DetailsPageState extends State<DetailsPage> {
               InkWell(
                 onTap: callVideoPlayer,
                 child: const Text(
-                  'watch the trailer: ',
+                  'watch the trailer : ',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
