@@ -16,11 +16,6 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(widget.data!.title.toString()),
-        centerTitle: true,
-      ),
       body: MovieDetails(),
     );
   }
@@ -29,56 +24,93 @@ class _DetailsPageState extends State<DetailsPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
-        vertical: 10,
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 350,
-              width: double.infinity,
-              child: Image.network(
-                widget.data!.coverUrl.toString(),
-                fit: BoxFit.fill,
-              ),
-            ),
-            const SizedBox(height: 30),
-            Text(widget.data!.overview.toString()),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(StringConstants.duration),
-                Text(
-                  widget.data!.duration.toString(),
-                  style: const TextStyle(
-                    color: Colors.grey,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              Stack(
+                children: [
+                  Container(
+                    height: 350,
+                    width: double.infinity,
+                    child: Image.network(
+                      widget.data!.coverUrl.toString(),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                const Text(StringConstants.minutes),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Row(
-              children: [
-                const Text(StringConstants.directed),
-                Text(widget.data!.directedBy.toString()),
-              ],
-            ),
-            const SizedBox(height: 5),
-            InkWell(
-              onTap: callVideoPlayer,
-              child: const Text(
-                'watch the trailer:',
+                  Positioned(
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Sumary ',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            )
-          ],
+              const SizedBox(height: 20),
+              Text(widget.data!.overview.toString()),
+              const SizedBox(height: 20),
+              Container(
+               // alignment: Alignment.center,
+                height: 20,
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Text('Rating :'),SizedBox(width: 20),
+                    Image.asset('images/5stars.png'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  const Text(StringConstants.duration),
+                  Text(
+                    widget.data!.duration.toString(),
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  const Text(StringConstants.minutes),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  const Text(StringConstants.directed),
+                  Text(widget.data!.directedBy.toString()),
+                ],
+              ),
+              const SizedBox(height: 8),
+              InkWell(
+                onTap: callVideoPlayer,
+                child: const Text(
+                  'watch the trailer:',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

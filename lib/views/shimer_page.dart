@@ -10,6 +10,7 @@ class Skeleton extends StatelessWidget {
       body: buildListView(),
     );
   }
+
   Shimmer buildListView() {
     return Shimmer.fromColors(
       highlightColor: Colors.grey[300]!,
@@ -18,17 +19,62 @@ class Skeleton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 200,
-            width: 380,
-            color: Colors.grey[400],
+            height: 220,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.grey,
+            ),
+            child: Row(children: [
+              Stack(
+                children: [
+                  Positioned(
+                    left: 20,
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      color: Colors.black12,
+                    ),
+                  ),
+                  const SizedBox(width: 50),
+                  Container(
+                    height: 25,
+                    width: 150,
+                    color: Colors.grey[400],
+                  ),
+                ],
+              )
+            ]),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Container(
-            height: 200,
-            width: 380,
-            color: Colors.grey[400],
+            height: 220,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.grey,
+            ),
+            child: Row(children: [
+              Stack(
+                children: [
+                  Positioned(
+                    left: 20,
+                    child: Container(
+                      height: 200,
+                      width: 150,
+                      color: Colors.black12,
+                    ),
+                  ),
+                  const SizedBox(width: 50),
+                  Container(
+                    height: 25,
+                    width: 150,
+                    color: Colors.grey[400],
+                  ),
+                ],
+              )
+            ]),
           ),
-          SizedBox(height: 10),
         ],
       ),
     );

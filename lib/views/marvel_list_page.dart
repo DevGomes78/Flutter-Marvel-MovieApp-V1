@@ -26,16 +26,16 @@ class _MarvelListPageState extends State<MarvelListPage> {
     setState(() {
       loadUser();
     });
+    controller = context.read<MarvelController>();
+    controller.getData(query: '');
     super.initState();
   }
 
   Future loadUser() async {
     setState(() => isLoading = true);
     await Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 6),
     );
-    controller = context.read<MarvelController>();
-    controller.getData(query: '');
     setState(() => isLoading = false);
   }
 
@@ -57,10 +57,10 @@ class _MarvelListPageState extends State<MarvelListPage> {
           SearchBar(),
           Expanded(
               child: ListView.builder(
-                  itemCount: isLoading ? 2 : provider.lista.length,
+                  itemCount: isLoading ? 1 : provider.lista.length,
                   itemBuilder: (context, index) {
                     if (isLoading) {
-                      return const Skeleton().buildListView();
+                      return Skeleton().buildListView();
                     } else {
                       provider.lista.isEmpty
                           ? const Center(child: CircularProgressIndicator())
@@ -118,14 +118,9 @@ class _MarvelListPageState extends State<MarvelListPage> {
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        lista.title.toString(),
-                        style: AppTextStyle.font26,
-                      ),
-                    ],
+                  child: Text(
+                    lista.title.toString(),
+                    style: AppTextStyle.font26,
                   ),
                 ),
               )

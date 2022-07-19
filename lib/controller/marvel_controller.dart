@@ -30,4 +30,5 @@ class MarvelController extends ChangeNotifier {
     }
     return [];
   }
+
 }
