@@ -7,6 +7,7 @@ import '../data/models/marvel_models.dart';
 
 class MarvelController extends ChangeNotifier {
   List<Data> lista = [];
+  var listaFavoritas = [];
   Future<List<Data>> getData({String? query}) async {
     try {
       final baseUrl = Uri.parse(ServiceConstants.baseUrl);
@@ -30,5 +31,8 @@ class MarvelController extends ChangeNotifier {
     }
     return [];
   }
-
+  void addListaFavorita(Data data){
+    listaFavoritas.add(lista.contains(data.title));
+    notifyListeners();
+  }
 }

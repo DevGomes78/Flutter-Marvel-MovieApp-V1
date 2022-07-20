@@ -53,9 +53,28 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    right: 20,
+                    child: IconButton(
+                      onPressed: () {
+
+                      },
+                      icon: const Icon(
+                        Icons.favorite_border,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
+              Container(
+                 alignment: Alignment.center,
+                height: 35,
+                width: double.infinity,
+                child: Image.asset('images/5stars.png'),
+              ),
               const Text(
                 'Sumary ',
                 style: TextStyle(
@@ -66,18 +85,6 @@ class _DetailsPageState extends State<DetailsPage> {
               const SizedBox(height: 20),
               Text(widget.data!.overview.toString()),
               const SizedBox(height: 20),
-              Container(
-               // alignment: Alignment.center,
-                height: 20,
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Text('Rating :'),SizedBox(width: 20),
-                    Image.asset('images/5stars.png'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 5),
               Row(
                 children: [
                   const Text(StringConstants.duration),
