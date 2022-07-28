@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marvel/constants/string_constants.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {
   Data? data;
@@ -15,12 +16,15 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: MovieDetails(),
+      body: ChangeNotifierProvider(
+        create:  (context)=> MarvelModels(id: widget.data!.id,isFavorite: false),
+          child: movieDetails()),
     );
   }
 
-  Padding MovieDetails() {
+  Padding movieDetails() {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -55,22 +59,25 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Positioned(
                     right: 20,
-                    child: IconButton(
-                      onPressed: () {
-
-                      },
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        size: 30,
-                        color: Colors.white,
-                      ),
+                    child: Consumer<MarvelModels>(
+                      builder: (context,provider,child)=>
+                      IconButton(
+                          onPressed: () {
+                            provider.toggleFavorite();
+                          },
+                          icon: Icon(provider.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border),
+                          color: Colors.white,
+                        ),
                     ),
-                  ),
+                    ),
+
                 ],
               ),
               const SizedBox(height: 20),
               Container(
-                 alignment: Alignment.center,
+                alignment: Alignment.center,
                 height: 35,
                 width: double.infinity,
                 child: Image.asset('images/5stars.png'),
@@ -87,7 +94,12 @@ class _DetailsPageState extends State<DetailsPage> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  const Text(StringConstants.duration),
+                  const Text(
+                    StringConstants.duration,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Text(
                     widget.data!.duration.toString(),
                     style: const TextStyle(
@@ -101,7 +113,12 @@ class _DetailsPageState extends State<DetailsPage> {
               const SizedBox(height: 5),
               Row(
                 children: [
-                  const Text(StringConstants.directed),
+                  const Text(
+                    StringConstants.directed,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Text(widget.data!.directedBy.toString()),
                 ],
               ),

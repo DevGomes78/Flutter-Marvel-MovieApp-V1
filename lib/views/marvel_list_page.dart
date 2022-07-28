@@ -57,7 +57,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
           SearchBar(),
           Expanded(
               child: ListView.builder(
-                  itemCount: isLoading ? 1 : provider.lista.length,
+                  itemCount: isLoading ? 2 : provider.lista.length,
                   itemBuilder: (context, index) {
                     if (isLoading) {
                       return Skeleton().buildListView();
@@ -123,7 +123,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
                     style: AppTextStyle.font26,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

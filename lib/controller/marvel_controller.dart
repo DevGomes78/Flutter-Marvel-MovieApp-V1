@@ -14,7 +14,8 @@ class MarvelController extends ChangeNotifier {
       final response = await http.get(baseUrl);
       if (response.statusCode == 200) {
         var decodeJson = jsonDecode(response.body);
-        decodeJson['data'].forEach((item) => lista.add(Data.fromJson(item)));
+        decodeJson['data'].forEach((item) =>
+            lista.add(Data.fromJson(item)));
         if (query!.length > 1) {
           lista = lista
               .where((item) => item.title!.toLowerCase().contains(
@@ -31,8 +32,5 @@ class MarvelController extends ChangeNotifier {
     }
     return [];
   }
-  void addListaFavorita(Data data){
-    listaFavoritas.add(lista.contains(data.title));
-    notifyListeners();
-  }
+
 }

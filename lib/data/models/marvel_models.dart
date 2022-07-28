@@ -1,30 +1,31 @@
-class MarvelModels {
+import 'package:flutter/material.dart';
+
+class MarvelModels  extends ChangeNotifier {
   List<Data>? data;
   int? total;
+ late bool isFavorite;
+ int? id;
 
-  MarvelModels({this.data, this.total});
+  MarvelModels({this.data, this.total, this.id, required this.isFavorite});
 
   MarvelModels.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     total = json['total'];
-  }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    data['total'] = this.total;
-    return data;
+
+  }
+  toggleFavorite() {
+    isFavorite = !isFavorite;
+    notifyListeners();
   }
 }
 
-class Data {
+class Data{
   int? id;
   String? title;
   String? releaseDate;
@@ -54,7 +55,9 @@ class Data {
         this.saga,
         this.chronology,
         this.postCreditScenes,
-        this.imdbId});
+        this.imdbId,
+
+      });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -73,22 +76,5 @@ class Data {
     imdbId = json['imdb_id'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['release_date'] = this.releaseDate;
-    data['box_office'] = this.boxOffice;
-    data['duration'] = this.duration;
-    data['overview'] = this.overview;
-    data['cover_url'] = this.coverUrl;
-    data['trailer_url'] = this.trailerUrl;
-    data['directed_by'] = this.directedBy;
-    data['phase'] = this.phase;
-    data['saga'] = this.saga;
-    data['chronology'] = this.chronology;
-    data['post_credit_scenes'] = this.postCreditScenes;
-    data['imdb_id'] = this.imdbId;
-    return data;
-  }
+
 }
