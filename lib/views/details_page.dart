@@ -16,10 +16,9 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: ChangeNotifierProvider(
-        create:  (context)=> MarvelModels(id: widget.data!.id,isFavorite: false),
+          create: (context) => MarvelModels(id: widget.data!.id),
           child: movieDetails()),
     );
   }
@@ -60,38 +59,49 @@ class _DetailsPageState extends State<DetailsPage> {
                   Positioned(
                     right: 20,
                     child: Consumer<MarvelModels>(
-                      builder: (context,provider,child)=>
-                      IconButton(
-                          onPressed: () {
-                            provider.toggleFavorite();
-                          },
-                          icon: Icon(provider.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border),
-                          color: Colors.white,
-                        ),
+                      builder: (context, provider, child) => IconButton(
+                        onPressed: () {
+                          provider.toggleFavorite();
+                        },
+                        icon: Icon(provider.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border),
+                        color: Colors.white,
+                      ),
                     ),
-                    ),
-
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
-              Container(
-                alignment: Alignment.center,
-                height: 35,
-                width: double.infinity,
-                child: Image.asset('images/5stars.png'),
-              ),
               const Text(
                 'Sumary ',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  color: Colors.amber,
                 ),
               ),
               const SizedBox(height: 20),
               Text(widget.data!.overview.toString()),
               const SizedBox(height: 20),
+              Container(
+                alignment: Alignment.center,
+                height: 20,
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    const Text(
+                      'rating:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 40),
+                    Image.asset('images/5stars.png'),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
               Row(
                 children: [
                   const Text(
@@ -100,14 +110,20 @@ class _DetailsPageState extends State<DetailsPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  const SizedBox(width: 15),
                   Text(
                     widget.data!.duration.toString(),
-                    style: const TextStyle(
-                      color: Colors.grey,
+                    style: TextStyle(
+                      color: Colors.grey[300],
                     ),
                   ),
                   const SizedBox(width: 5),
-                  const Text(StringConstants.minutes),
+                   Text(
+                    StringConstants.minutes,
+                    style: TextStyle(
+                      color: Colors.grey[300],
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 5),
@@ -119,7 +135,12 @@ class _DetailsPageState extends State<DetailsPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(widget.data!.directedBy.toString()),
+                  Text(
+                    widget.data!.directedBy.toString(),
+                    style: TextStyle(
+                      color: Colors.grey[300],
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 8),

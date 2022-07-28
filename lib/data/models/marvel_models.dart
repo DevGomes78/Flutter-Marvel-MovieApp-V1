@@ -6,7 +6,7 @@ class MarvelModels  extends ChangeNotifier {
  late bool isFavorite;
  int? id;
 
-  MarvelModels({this.data, this.total, this.id, required this.isFavorite});
+  MarvelModels({this.data, this.total, this.id,this.isFavorite = false});
 
   MarvelModels.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {

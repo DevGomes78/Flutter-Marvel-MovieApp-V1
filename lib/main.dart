@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context)=> MarvelController()),
-       ChangeNotifierProvider(create: (context)=> MarvelModels(isFavorite: false)),
+       ChangeNotifierProvider(create: (context)=> MarvelModels()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
