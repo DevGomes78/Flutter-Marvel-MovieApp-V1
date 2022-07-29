@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:marvel/views/splash_screen_page.dart';
 import 'package:provider/provider.dart';
 import 'controller/marvel_controller.dart';
+import 'data/models/marvel_models.dart';
 
 
 void main() {
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context)=> MarvelController()),
+        ChangeNotifierProvider(create: (context)=>Data()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

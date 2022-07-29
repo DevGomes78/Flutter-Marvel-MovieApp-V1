@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/constants/string_constants.dart';
+import 'package:provider/provider.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,96 +28,103 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       child: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              Stack(
-                children: [
-                  Container(
-                    height: 350,
-                    width: double.infinity,
-                    child: Image.network(
-                      widget.data!.coverUrl.toString(),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  Positioned(
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        size: 30,
-                        color: Colors.white,
+          child: ChangeNotifierProvider(
+            create: (context) => Data(id: widget.data!.id),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                Stack(
+                  children: [
+                    Container(
+                      height: 350,
+                      width: double.infinity,
+                      child: Image.network(
+                        widget.data!.coverUrl.toString(),
+                        fit: BoxFit.fill,
                       ),
                     ),
-                  ),
-                  Positioned(
-                    right: 20,
-                    child: IconButton(
-                      onPressed: () {
-
-                      },
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        size: 30,
-                        color: Colors.white,
+                    Positioned(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Container(
-                 alignment: Alignment.center,
-                height: 35,
-                width: double.infinity,
-                child: Image.asset('images/5stars.png'),
-              ),
-              const Text(
-                'Sumary ',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+                    Positioned(
+                      right: 20,
+                      child: Consumer<Data>(
+                        builder: (context, provider, child) => IconButton(
+                          onPressed: () {
+                            provider.toogleFavorite();
+                          },
+                          icon:  Icon(
+                            provider.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(widget.data!.overview.toString()),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  const Text(StringConstants.duration),
-                  Text(
-                    widget.data!.duration.toString(),
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  const Text(StringConstants.minutes),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  const Text(StringConstants.directed),
-                  Text(widget.data!.directedBy.toString()),
-                ],
-              ),
-              const SizedBox(height: 8),
-              InkWell(
-                onTap: callVideoPlayer,
-                child: const Text(
-                  'watch the trailer: ',
+                const SizedBox(height: 20),
+                Container(
+                  alignment: Alignment.center,
+                  height: 35,
+                  width: double.infinity,
+                  child: Image.asset('images/5stars.png'),
+                ),
+                const Text(
+                  'Sumary ',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )
-            ],
+                const SizedBox(height: 20),
+                Text(widget.data!.overview.toString()),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    const Text(StringConstants.duration),
+                    Text(
+                      widget.data!.duration.toString(),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    const Text(StringConstants.minutes),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    const Text(StringConstants.directed),
+                    Text(widget.data!.directedBy.toString()),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: callVideoPlayer,
+                  child: const Text(
+                    'watch the trailer: ',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -1,25 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:marvel/data/models/marvel_models.dart';
-import 'package:marvel/views/details_page.dart';
 import 'package:marvel/views/shimer_page.dart';
 import 'package:provider/provider.dart';
-import '../components/text_style.dart';
-import '../constants/string_constants.dart';
-import '../controller/marvel_controller.dart';
 
-class MarvelListPage extends StatefulWidget {
-  const MarvelListPage({Key? key}) : super(key: key);
+import '../constants/String_constants.dart';
+import '../controller/marvel_controller.dart';
+import '../data/models/marvel_models.dart';
+import 'details_page.dart';
+
+class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({Key? key}) : super(key: key);
 
   @override
-  State<MarvelListPage> createState() => _MarvelListPageState();
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
-class _MarvelListPageState extends State<MarvelListPage> {
+class _FavoritesPageState extends State<FavoritesPage> {
   final TextEditingController _searchController = TextEditingController();
   late final MarvelController controller;
   bool isLoading = false;
-  var lista;
+ var lista;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
       loadUser();
     });
     controller = context.read<MarvelController>();
-    controller.getData(query: '');
+    controller.itemsFavorito;
     super.initState();
   }
 
@@ -39,32 +39,38 @@ class _MarvelListPageState extends State<MarvelListPage> {
     setState(() => isLoading = false);
   }
 
-  @override
   Widget build(BuildContext context) {
-    MarvelController provider = Provider.of<MarvelController>(context);
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Favoritos'),
+        centerTitle: true,
+      ),
         body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 80),
-          Text(
-            StringConstants.titleText,
-            style: AppTextStyle.font22Bold,
-          ),
+          const SizedBox(height: 40),
+          searchBar(),
           const SizedBox(height: 20),
-          SearchBar(),
           Expanded(
-              child: ListView.builder(
-                  itemCount: isLoading ? 2 : provider.lista.length,
+              child: GridView.builder(
+                  gridDelegate: const
+                  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 3,
+                    childAspectRatio: 1.1,
+                  ),
+                  itemCount: isLoading ? 2 : controller.ItemsFavorito.length,
                   itemBuilder: (context, index) {
                     if (isLoading) {
                       return const Skeleton().buildListView();
                     } else {
-                      provider.lista.isEmpty
+                      controller.ItemsFavorito.isEmpty
                           ? const Center(child: CircularProgressIndicator())
-                          : lista = provider.lista[index];
+                          : lista =controller.ItemsFavorito[index];
+
                       return marvelList(context, lista);
                     }
                   })),
@@ -83,18 +89,17 @@ class _MarvelListPageState extends State<MarvelListPage> {
                       data: lista,
                     )));
       },
-      child: Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 200,
+
+         child: Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 5,
+                vertical: 5,
+              ),
+              child: Container(
+                height: 300,
+                width: 300,
                 decoration: const BoxDecoration(
                   color: Colors.black54,
                 ),
@@ -102,7 +107,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
                   image: CachedNetworkImageProvider(
                     lista.coverUrl.toString(),
                     maxHeight: 200,
-                    maxWidth: 150,
+                    maxWidth: 200,
                   ),
                   loadingBuilder: (context, child, progress) {
                     if (progress == null) {
@@ -114,28 +119,17 @@ class _MarvelListPageState extends State<MarvelListPage> {
                       ),
                     );
                   },
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
-                  child: Text(
-                    lista.title.toString(),
-                    style: AppTextStyle.font26,
-                  ),
-                ),
-              )
-            ],
+            ),
           ),
-        ),
-      ),
+
+
     );
   }
 
-  TextField SearchBar() {
+  TextField searchBar() {
     return TextField(
       onChanged: search,
       decoration: InputDecoration(

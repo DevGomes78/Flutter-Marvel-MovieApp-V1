@@ -7,7 +7,8 @@ import '../data/models/marvel_models.dart';
 
 class MarvelController extends ChangeNotifier {
   List<Data> lista = [];
-  var listaFavoritas = [];
+  late List<Data> _items;
+
   Future<List<Data>> getData({String? query}) async {
     try {
       final baseUrl = Uri.parse(ServiceConstants.baseUrl);
@@ -22,7 +23,9 @@ class MarvelController extends ChangeNotifier {
                   ))
               .toList();
         }
+
         notifyListeners();
+        _items = lista;
         return lista;
       }
     } catch (e) {
@@ -31,8 +34,15 @@ class MarvelController extends ChangeNotifier {
     }
     return [];
   }
-  void addListaFavorita(Data data){
-    listaFavoritas.add(lista.contains(data.title));
+
+  List<Data> get items => [..._items];
+
+
+  List<Data> get itemsFavorito =>
+      _items.where((prod) => prod.isFavorite).toList();
+
+  void favoritosOnly() {
+    _items.where((prod) => prod.isFavorite).toList();
     notifyListeners();
   }
 }
