@@ -56,7 +56,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
             style: AppTextStyle.font28,
           ),
           const SizedBox(height: 40),
-          SearchBar(),
+          searchBar(),
           Expanded(
               child: ListView.builder(
                   itemCount: isLoading ? 2 : provider.lista.length,
@@ -135,7 +135,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
                                 lista.title.toString(),
                                 style: AppTextStyle.font26,
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Text(
                                 (DateFormat("yyyy").format(
                                     DateTime.parse(
@@ -155,7 +155,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
     );
   }
 
-  TextField SearchBar() {
+  TextField searchBar() {
     return TextField(
       onChanged: search,
       decoration: InputDecoration(

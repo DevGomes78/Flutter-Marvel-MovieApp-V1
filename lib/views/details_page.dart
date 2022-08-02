@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:marvel/components/text_style.dart';
 import 'package:marvel/constants/string_constants.dart';
 import 'package:provider/provider.dart';
+import '../constants/service_constants.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
@@ -18,11 +20,11 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MovieDetails(),
+      body: movieDetails(),
     );
   }
 
-  Padding MovieDetails() {
+  Padding movieDetails() {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -67,7 +69,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           onPressed: () {
                             provider.toogleFavorite();
                           },
-                          icon:  Icon(
+                          icon: Icon(
                             provider.isFavorite
                                 ? Icons.favorite
                                 : Icons.favorite_border,
@@ -83,23 +85,16 @@ class _DetailsPageState extends State<DetailsPage> {
                 Row(
                   children: [
                     const SizedBox(width: 60),
-                   Text(
-                     (DateFormat("yyyy").format(
-                         DateTime.parse(
-                     widget.data!.releaseDate.toString()))),
-                     style: const TextStyle(
-                       fontSize: 15,
-                       color: Colors.grey,
-                     ),),
-                    const SizedBox(width: 15),
-                    Container(
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
+                    Text(
+                      (DateFormat("yyyy").format(
+                          DateTime.parse(widget.data!.releaseDate.toString()))),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
                       ),
                     ),
+                    const SizedBox(width: 15),
+                    container(),
                     const SizedBox(width: 15),
                     Text(
                       widget.data!.duration.toString(),
@@ -109,28 +104,21 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                     const SizedBox(width: 5),
-                    const Text(StringConstants.minutes,style: const TextStyle(
-                      color: Colors.grey,
+                    Text(
+                      StringConstants.minutes,
+                      style: AppTextStyle.font15,
                     ),
+                    const SizedBox(width: 8),
+                    container(),
+                    const SizedBox(width: 18),
+                    Text(
+                      StringConstants.directed,
+                      style: AppTextStyle.font15,
                     ),
-                    SizedBox(width: 8),
-                    Container(
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.white,
-                      ),
+                    Text(
+                      widget.data!.directedBy.toString(),
+                      style: AppTextStyle.font15,
                     ),
-                    SizedBox(width: 18),
-                    const Text(StringConstants.directed,style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),),
-                    Text(widget.data!.directedBy.toString(),style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -138,32 +126,21 @@ class _DetailsPageState extends State<DetailsPage> {
                   alignment: Alignment.center,
                   height: 45,
                   width: double.infinity,
-                  child: Image.asset('images/5stars.png'),
+                  child: Image.asset(ServiceConstants.imageAsset),
                 ),
-                const Text(
-                  'Sumary ',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Text(
+                  StringConstants.sumary,
+                  style: AppTextStyle.font25Bold,
                 ),
                 const SizedBox(height: 20),
                 Text(widget.data!.overview.toString()),
-
-
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-
-                  ],
-                ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 15),
                 InkWell(
                   onTap: callVideoPlayer,
                   child: const Text(
-                    'watch the trailer: ',
+                    StringConstants.watchTheTrailer,
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -172,6 +149,17 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Container container() {
+    return Container(
+      height: 10,
+      width: 10,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.white,
       ),
     );
   }
