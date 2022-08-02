@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:marvel/data/models/marvel_models.dart';
 import 'package:marvel/views/details_page.dart';
 import 'package:marvel/views/shimer_page.dart';
@@ -43,17 +44,18 @@ class _MarvelListPageState extends State<MarvelListPage> {
   Widget build(BuildContext context) {
     MarvelController provider = Provider.of<MarvelController>(context);
     return Scaffold(
+
         body: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 80),
+          const SizedBox(height: 60),
           Text(
             StringConstants.titleText,
-            style: AppTextStyle.font22Bold,
+            style: AppTextStyle.font28,
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
           SearchBar(),
           Expanded(
               child: ListView.builder(
@@ -74,6 +76,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
   }
 
   InkWell marvelList(BuildContext context, Data lista) {
+    Data provider = Provider.of<Data>(context);
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -83,55 +86,72 @@ class _MarvelListPageState extends State<MarvelListPage> {
                       data: lista,
                     )));
       },
-      child: Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 200,
-                decoration: const BoxDecoration(
-                  color: Colors.black54,
-                ),
-                child: Image(
-                  image: CachedNetworkImageProvider(
-                    lista.coverUrl.toString(),
-                    maxHeight: 200,
-                    maxWidth: 150,
-                  ),
-                  loadingBuilder: (context, child, progress) {
-                    if (progress == null) {
-                      return child;
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.grey,
-                      ),
-                    );
-                  },
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Expanded(
+
+         child:   ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Card(
+                elevation: 5,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
+                    horizontal: 10,
+                    vertical: 10,
                   ),
-                  child: Text(
-                    lista.title.toString(),
-                    style: AppTextStyle.font26,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          height: 180,
+                            color: Colors.black54,
+                          child: Image(
+                            image: CachedNetworkImageProvider(
+                              lista.coverUrl.toString(),
+                              maxHeight: 180,
+                              maxWidth: 130,
+                            ),
+                            loadingBuilder: (context, child, progress) {
+                              if (progress == null) {
+                                return child;
+                              }
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.grey,
+                                ),
+                              );
+                            },
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                lista.title.toString(),
+                                style: AppTextStyle.font26,
+                              ),
+                              SizedBox(height: 10),
+                              Text(
+                                (DateFormat("yyyy").format(
+                                    DateTime.parse(
+                                        lista.releaseDate.toString()))),
+                               ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
+
+
     );
   }
 

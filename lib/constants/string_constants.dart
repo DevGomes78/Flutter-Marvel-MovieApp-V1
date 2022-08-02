@@ -4,7 +4,7 @@ class StringConstants{
   static const searchMovies = 'Pesquisar Filmes';
   static const duration = "duration :  ";
   static const minutes = "min ";
-  static const directed = "directed by :  ";
+  static const directed = "directed:  ";
 
 
 }

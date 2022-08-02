@@ -3,6 +3,7 @@ import 'package:marvel/constants/string_constants.dart';
 import 'package:provider/provider.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 
 class DetailsPage extends StatefulWidget {
   Data? data;
@@ -37,11 +38,14 @@ class _DetailsPageState extends State<DetailsPage> {
                 Stack(
                   children: [
                     Container(
-                      height: 350,
+                      height: 450,
                       width: double.infinity,
-                      child: Image.network(
-                        widget.data!.coverUrl.toString(),
-                        fit: BoxFit.fill,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          widget.data!.coverUrl.toString(),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     Positioned(
@@ -76,9 +80,63 @@ class _DetailsPageState extends State<DetailsPage> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  children: [
+                    const SizedBox(width: 60),
+                   Text(
+                     (DateFormat("yyyy").format(
+                         DateTime.parse(
+                     widget.data!.releaseDate.toString()))),
+                     style: const TextStyle(
+                       fontSize: 15,
+                       color: Colors.grey,
+                     ),),
+                    const SizedBox(width: 15),
+                    Container(
+                      height: 10,
+                      width: 10,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    Text(
+                      widget.data!.duration.toString(),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    const Text(StringConstants.minutes,style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                    ),
+                    SizedBox(width: 8),
+                    Container(
+                      height: 10,
+                      width: 10,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(width: 18),
+                    const Text(StringConstants.directed,style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),),
+                    Text(widget.data!.directedBy.toString(),style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),),
+                  ],
+                ),
+                const SizedBox(height: 20),
                 Container(
                   alignment: Alignment.center,
-                  height: 35,
+                  height: 45,
                   width: double.infinity,
                   child: Image.asset('images/5stars.png'),
                 ),
@@ -91,25 +149,12 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
                 const SizedBox(height: 20),
                 Text(widget.data!.overview.toString()),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    const Text(StringConstants.duration),
-                    Text(
-                      widget.data!.duration.toString(),
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(StringConstants.minutes),
-                  ],
-                ),
+
+
                 const SizedBox(height: 5),
                 Row(
                   children: [
-                    const Text(StringConstants.directed),
-                    Text(widget.data!.directedBy.toString()),
+
                   ],
                 ),
                 const SizedBox(height: 8),

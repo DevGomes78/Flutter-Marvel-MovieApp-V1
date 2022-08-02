@@ -39,6 +39,8 @@ dependencies:
   cached_network_image:
   url_launcher:
   shimmer:
+  carousel_slider:
+  intl:
 
 dev_dependencies:
   flutter_test:

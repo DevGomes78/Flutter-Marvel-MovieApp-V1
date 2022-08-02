@@ -10,4 +10,8 @@ class AppTextStyle{
     fontSize: 26,
     color: Colors.white,
   );
+  static TextStyle font28 = const TextStyle(
+    fontSize: 28,
+    color: Colors.white,
+  );
 }

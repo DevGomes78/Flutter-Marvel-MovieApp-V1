@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
         ),
         home: const Splash(),
       ),
