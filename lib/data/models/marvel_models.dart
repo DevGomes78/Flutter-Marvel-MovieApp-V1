@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MarvelModels  extends ChangeNotifier {
+class MarvelModels extends ChangeNotifier {
   List<Data>? data;
   int? total;
- late bool isFavorite;
- int? id;
 
-  MarvelModels({this.data, this.total, this.id,this.isFavorite = false});
+  MarvelModels({
+    this.data,
+    this.total,
+  });
 
   MarvelModels.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
@@ -16,16 +17,10 @@ class MarvelModels  extends ChangeNotifier {
       });
     }
     total = json['total'];
-
-
-  }
-  toggleFavorite() {
-    isFavorite = !isFavorite;
-    notifyListeners();
   }
 }
 
-class Data{
+class Data extends ChangeNotifier {
   int? id;
   String? title;
   String? releaseDate;
@@ -40,6 +35,7 @@ class Data{
   int? chronology;
   int? postCreditScenes;
   String? imdbId;
+  late bool isFavorite;
 
   Data(
       {this.id,
@@ -56,8 +52,7 @@ class Data{
         this.chronology,
         this.postCreditScenes,
         this.imdbId,
-
-      });
+        this.isFavorite = false});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -76,5 +71,8 @@ class Data{
     imdbId = json['imdb_id'];
   }
 
-
+  void toogleFavorite() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }

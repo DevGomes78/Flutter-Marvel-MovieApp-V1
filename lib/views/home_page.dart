@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'marvel_list_page.dart';
+import 'marvel_listpage2.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -8,8 +9,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: MarvelListPage(),
+    return const Scaffold(
+      body: MarvelListPage2(),
     );
   }
 }
