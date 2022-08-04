@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel/controller/favorites_controller.dart';
 import 'package:marvel/views/splash_screen_page.dart';
 import 'package:provider/provider.dart';
 import 'controller/marvel_controller.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context)=> MarvelController()),
         ChangeNotifierProvider(create: (context)=>Data()),
+        ChangeNotifierProvider(create: (context)=>Favorites()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

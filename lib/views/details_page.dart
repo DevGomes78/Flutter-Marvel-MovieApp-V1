@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/components/text_style.dart';
 import 'package:marvel/constants/string_constants.dart';
+import 'package:marvel/controller/favorites_controller.dart';
 import 'package:provider/provider.dart';
 import '../constants/service_constants.dart';
 import '../data/models/marvel_models.dart';
@@ -19,6 +20,7 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: movieDetails(),
     );
@@ -64,10 +66,12 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     Positioned(
                       right: 20,
-                      child: Consumer<Data>(
+                      child: Consumer<Favorites>(
                         builder: (context, provider, child) => IconButton(
                           onPressed: () {
                             provider.toogleFavorite();
+                            provider.lista.add(widget.data!.title.toString());
+
                           },
                           icon: Icon(
                             provider.isFavorite

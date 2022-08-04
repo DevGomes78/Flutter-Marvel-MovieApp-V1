@@ -8,7 +8,6 @@ import '../data/models/marvel_models.dart';
 class MarvelController extends ChangeNotifier {
   List<Data> lista = [];
 
-
   Future<List<Data>> getData({String? query}) async {
     try {
       final baseUrl = Uri.parse(ServiceConstants.baseUrl);
@@ -30,6 +29,6 @@ class MarvelController extends ChangeNotifier {
       print('Erro ao acessar a Pagina: $e');
       return [];
     }
-    return[];
+    return [];
   }
 }

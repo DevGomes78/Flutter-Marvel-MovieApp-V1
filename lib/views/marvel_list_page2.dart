@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:marvel/views/favorites_page.dart';
 import 'package:provider/provider.dart';
 
 import '../components/text_style.dart';
@@ -71,7 +72,8 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                   subtitle: const Text("meus favoritos..."),
                   trailing: const Icon(Icons.arrow_forward),
                   onTap: () {
-                    Navigator.pop(context);
+                   Navigator.push(context,
+                       MaterialPageRoute(builder: (context)=> FavoritesPage()));
                   }
               )
             ],
