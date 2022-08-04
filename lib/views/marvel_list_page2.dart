@@ -49,10 +49,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
           style: AppTextStyle.font26,
         ),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
+
         actions: [
           IconButton(
             onPressed: () {
@@ -64,6 +61,21 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
             icon: const Icon(Icons.search),
           ),
         ],
+      ),
+      drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                  leading: const Icon(Icons.star),
+                  title: const Text("Favoritos"),
+                  subtitle: const Text("meus favoritos..."),
+                  trailing: const Icon(Icons.arrow_forward),
+                  onTap: () {
+                    Navigator.pop(context);
+                  }
+              )
+            ],
+          )
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
