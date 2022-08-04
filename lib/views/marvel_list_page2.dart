@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../components/text_style.dart';
 import '../constants/string_constants.dart';
 import '../controller/marvel_controller.dart';
+import '../controller/search_movie.dart';
 import 'details_page.dart';
 
 class MarvelListPage2 extends StatefulWidget {
@@ -42,7 +43,28 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
   Widget build(BuildContext context) {
     MarvelController provider = Provider.of<MarvelController>(context);
     return Scaffold(
-
+      appBar: AppBar(
+        title: Text(
+          StringConstants.titleText,
+          style: AppTextStyle.font26,
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: SearchMovie(),
+              );
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 10,
@@ -52,19 +74,14 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 80),
-              Text(
-                StringConstants.titleText,
-                style: AppTextStyle.font28,
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.all(10),
                 child: CarouselSlider.builder(
                   itemCount: provider.lista.length,
                   options: CarouselOptions(
                     enlargeCenterPage: true,
-                    height: 300,
+                    height: 270,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
                     reverse: false,
@@ -75,16 +92,17 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                     return GestureDetector(
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.white,
-                            )),
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                        ),
                         //ClipRRect for image border radius
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
                             provider.lista[i].coverUrl.toString(),
-                            width: 500,
+                            width: 400,
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -94,40 +112,41 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DetailsPage(
-                                  data: provider.lista[i],
-                                )));
+                                      data: provider.lista[i],
+                                    )));
                       },
                     );
                   },
                 ),
               ),
-              SizedBox(height: 20),
-              Text('Campeões de Bilheterias:',style: AppTextStyle.font26,),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+              Text(
+                'Campeões de Bilheterias',
+                style: AppTextStyle.font22Bold,
+              ),
+              const SizedBox(height: 20),
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                height: 250,
+                height: 210,
                 width: double.infinity,
                 child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
+                    scrollDirection: Axis.horizontal,
                     itemCount: provider.lista.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => DetailsPage(
-                                    data: provider.lista[index],
-                                  )));
+                                        data: provider.lista[index],
+                                      )));
                         },
                         child: Container(
-                          height: 190,
-                          width: 180,
+                          margin: const EdgeInsets.symmetric(horizontal: 2),
+                          height: 180,
+                          width: 140,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
+                            borderRadius: BorderRadius.circular(20),
                             child: Image.network(
                               provider.lista[index].coverUrl.toString(),
                             ),
