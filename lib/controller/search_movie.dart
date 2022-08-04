@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvel/constants/string_constants.dart';
 import 'package:marvel/controller/marvel_controller.dart';
 import 'package:marvel/views/details_page.dart';
 import '../data/models/marvel_models.dart';
@@ -70,7 +71,7 @@ class SearchMovie extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return const Center(
       child: Text(
-        'Filme nao encontrado (:',
+        StringConstants.searchMovies,
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
