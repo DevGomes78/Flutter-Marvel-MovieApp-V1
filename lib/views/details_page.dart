@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/components/text_style.dart';
 import 'package:marvel/constants/string_constants.dart';
+import 'package:marvel/views/marvel_listpage2.dart';
 import 'package:provider/provider.dart';
 import '../constants/service_constants.dart';
+import '../controller/favourites_controller.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
@@ -37,9 +39,94 @@ class _DetailsPageState extends State<DetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                cardCover(),
+                Stack(
+                  children: [
+                    Container(
+                      height: 400,
+                      width: double.infinity,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          widget.data!.coverUrl.toString(),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MarvelListPage2(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 20,
+                      child: Consumer<Favorites>(
+                        builder: (context, provider, child) => IconButton(
+                          onPressed: () {
+                            provider.toogleFavorite();
+                            provider.lista.add(
+                              widget.data!.title.toString(),
+                            );
+                          },
+                          icon: Icon(
+                            provider.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 20),
-                infoBanner(),
+                Row(
+                  children: [
+                    const SizedBox(width: 60),
+                    Text(
+                      (DateFormat("yyyy").format(
+                          DateTime.parse(widget.data!.releaseDate.toString()))),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    container(),
+                    const SizedBox(width: 15),
+                    Text(
+                      widget.data!.duration.toString(),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      StringConstants.minutes,
+                      style: AppTextStyle.font15,
+                    ),
+                    const SizedBox(width: 8),
+                    container(),
+                    const SizedBox(width: 18),
+                    Text(
+                      StringConstants.genre,
+                      style: AppTextStyle.font15,
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 20),
                 Container(
                   alignment: Alignment.center,
@@ -69,93 +156,6 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Row infoBanner() {
-    return Row(
-      children: [
-        const SizedBox(width: 40),
-        Text(
-          (DateFormat("yyyy")
-              .format(DateTime.parse(widget.data!.releaseDate.toString()))),
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.grey,
-          ),
-        ),
-        const SizedBox(width: 10),
-        container(),
-        const SizedBox(width: 10),
-        Text(
-          widget.data!.duration.toString(),
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.grey,
-          ),
-        ),
-        const SizedBox(width: 5),
-        Text(
-          StringConstants.minutes,
-          style: AppTextStyle.font15,
-        ),
-        const SizedBox(width: 8),
-        container(),
-        const SizedBox(width: 10),
-        Text(
-          StringConstants.directed,
-          style: AppTextStyle.font15,
-        ),
-        Text(
-          widget.data!.directedBy.toString(),
-          style: AppTextStyle.font15,
-        ),
-      ],
-    );
-  }
-
-  Stack cardCover() {
-    return Stack(
-      children: [
-        Container(
-          height: 450,
-          width: double.infinity,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              widget.data!.coverUrl.toString(),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-        Positioned(
-          child: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          right: 20,
-          child: Consumer<Data>(
-            builder: (context, provider, child) => IconButton(
-              onPressed: () {
-                provider.toogleFavorite();
-              },
-              icon: Icon(
-                provider.isFavorite ? Icons.favorite : Icons.favorite_border,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 

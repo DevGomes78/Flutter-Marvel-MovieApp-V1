@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import '../components/text_style.dart';
 import '../constants/string_constants.dart';
 import '../controller/marvel_controller.dart';
+import '../controller/search_movie.dart';
 import 'details_page.dart';
+import 'favorites_page.dart';
 
 class MarvelListPage2 extends StatefulWidget {
   const MarvelListPage2({Key? key}) : super(key: key);
@@ -48,16 +50,34 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
           style: AppTextStyle.font26,
         ),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu),
-        ),
+
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: SearchMovie(),
+              );
+            },
             icon: const Icon(Icons.search),
           ),
         ],
+      ),
+      drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                  leading: const Icon(Icons.star),
+                  title: const Text("Favoritos"),
+                  subtitle: const Text("meus favoritos..."),
+                  trailing: const Icon(Icons.arrow_forward),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=> FavoritesPage()));
+                  }
+              )
+            ],
+          )
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -81,21 +101,22 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                     reverse: false,
                     aspectRatio: 5.0,
                   ),
-                  itemBuilder: (context, i, id) {
-                    //for onTap to redirect to another screen
-                    return GestureDetector(
+                  itemBuilder: (context, index, id) {
+                    return(index<=0)?
+                        Container():
+                     GestureDetector(
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.white,
-                            ),
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
                         ),
                         //ClipRRect for image border radius
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.network(
-                            provider.lista[i].coverUrl.toString(),
+                            provider.lista[index].coverUrl.toString(),
                             width: 400,
                             fit: BoxFit.fill,
                           ),
@@ -106,8 +127,8 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DetailsPage(
-                                      data: provider.lista[i],
-                                    )));
+                                  data: provider.lista[index],
+                                )));
                       },
                     );
                   },
@@ -132,8 +153,8 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => DetailsPage(
-                                        data: provider.lista[index],
-                                      )));
+                                    data: provider.lista[index],
+                                  )));
                         },
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 2),
