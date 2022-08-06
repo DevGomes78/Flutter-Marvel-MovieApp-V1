@@ -35,7 +35,6 @@ class Data extends ChangeNotifier {
   int? chronology;
   int? postCreditScenes;
   String? imdbId;
- late bool isFavorite;
 
   Data(
       {this.id,
@@ -52,7 +51,7 @@ class Data extends ChangeNotifier {
       this.chronology,
       this.postCreditScenes,
       this.imdbId,
-      this.isFavorite = false});
+     });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -69,10 +68,5 @@ class Data extends ChangeNotifier {
     chronology = json['chronology'];
     postCreditScenes = json['post_credit_scenes'];
     imdbId = json['imdb_id'];
-  }
-
-  void toogleFavorite() {
-    isFavorite = !isFavorite;
-    notifyListeners();
   }
 }

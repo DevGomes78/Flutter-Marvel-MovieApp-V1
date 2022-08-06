@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/components/text_style.dart';
 import 'package:marvel/constants/string_constants.dart';
-import 'package:marvel/controller/favorites_controller.dart';
+import 'package:marvel/controller/favorite_controler.dart';
 import 'package:provider/provider.dart';
 import '../constants/service_constants.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import '../utils/routes.dart';
+
 
 class DetailsPage extends StatefulWidget {
   Data? data;
@@ -20,7 +22,6 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: movieDetails(),
     );
@@ -42,7 +43,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 Stack(
                   children: [
                     Container(
-                      height: 450,
+                      height: 400,
                       width: double.infinity,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -55,7 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Positioned(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, Routes.marvelListPage2);
                         },
                         icon: const Icon(
                           Icons.arrow_back,
@@ -70,8 +71,9 @@ class _DetailsPageState extends State<DetailsPage> {
                         builder: (context, provider, child) => IconButton(
                           onPressed: () {
                             provider.toogleFavorite();
-                            provider.lista.add(widget.data!.title.toString());
-
+                            provider.lista.add(
+                              widget.data!.title.toString(),
+                            );
                           },
                           icon: Icon(
                             provider.isFavorite
@@ -88,7 +90,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    const SizedBox(width: 60),
+                    const SizedBox(width: 110),
                     Text(
                       (DateFormat("yyyy").format(
                           DateTime.parse(widget.data!.releaseDate.toString()))),
@@ -116,11 +118,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     container(),
                     const SizedBox(width: 18),
                     Text(
-                      StringConstants.directed,
-                      style: AppTextStyle.font15,
-                    ),
-                    Text(
-                      widget.data!.directedBy.toString(),
+                      StringConstants.genre,
                       style: AppTextStyle.font15,
                     ),
                   ],

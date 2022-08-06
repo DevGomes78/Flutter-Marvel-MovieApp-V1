@@ -41,6 +41,7 @@ dependencies:
   shimmer:
   carousel_slider:
   intl:
+  device_preview:
 
 dev_dependencies:
   flutter_test:

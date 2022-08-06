@@ -1,12 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:marvel/views/favorites_page.dart';
 import 'package:provider/provider.dart';
-
 import '../components/text_style.dart';
 import '../constants/string_constants.dart';
 import '../controller/marvel_controller.dart';
 import '../controller/search_movie.dart';
+import '../utils/routes.dart';
 import 'details_page.dart';
 
 class MarvelListPage2 extends StatefulWidget {
@@ -50,7 +50,6 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
           style: AppTextStyle.font26,
         ),
         centerTitle: true,
-
         actions: [
           IconButton(
             onPressed: () {
@@ -65,20 +64,17 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
       ),
       drawer: Drawer(
           child: ListView(
-            children: <Widget>[
-              ListTile(
-                  leading: const Icon(Icons.star),
-                  title: const Text("Favoritos"),
-                  subtitle: const Text("meus favoritos..."),
-                  trailing: const Icon(Icons.arrow_forward),
-                  onTap: () {
-                   Navigator.push(context,
-                       MaterialPageRoute(builder: (context)=> FavoritesPage()));
-                  }
-              )
-            ],
-          )
-      ),
+        children: <Widget>[
+          ListTile(
+              leading: const Icon(Icons.star),
+              title: const Text(StringConstants.favorites),
+              subtitle: const Text(StringConstants.Myfavorites),
+              trailing: const Icon(Icons.arrow_forward),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.favorites);
+              })
+        ],
+      )),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 10,
@@ -89,86 +85,14 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.all(10),
-                child: CarouselSlider.builder(
-                  itemCount: provider.lista.length,
-                  options: CarouselOptions(
-                    enlargeCenterPage: true,
-                    height: 270,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    reverse: false,
-                    aspectRatio: 5.0,
-                  ),
-                  itemBuilder: (context, i, id) {
-                    //for onTap to redirect to another screen
-                    return GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                        ),
-                        //ClipRRect for image border radius
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.network(
-                            provider.lista[i].coverUrl.toString(),
-                            width: 400,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DetailsPage(
-                                      data: provider.lista[i],
-                                    )));
-                      },
-                    );
-                  },
-                ),
-              ),
+              carrouselSlider(provider),
               const SizedBox(height: 20),
               Text(
-                'Campeões de Bilheterias',
+                StringConstants.campeoesDeBilheteria,
                 style: AppTextStyle.font22Bold,
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 210,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: provider.lista.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailsPage(
-                                        data: provider.lista[index],
-                                      )));
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 2),
-                          height: 180,
-                          width: 140,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.network(
-                              provider.lista[index].coverUrl.toString(),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              )
+              listMovie(provider)
             ],
           ),
         ),
@@ -176,32 +100,99 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
     );
   }
 
-  TextField searchBar() {
-    return TextField(
-      onChanged: search,
-      decoration: InputDecoration(
-          hintText: StringConstants.searchMovies,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          prefixIcon: IconButton(
-            onPressed: () {
-              controller.getData(query: _searchController.text);
-            },
-            icon: const Icon(Icons.search),
-          )),
-      controller: _searchController,
+  Container listMovie(MarvelController provider) {
+    return Container(
+      height: 210,
+      width: double.infinity,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: provider.lista.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailsPage(
+                              data: provider.lista[index],
+                            )));
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 2),
+                height: 180,
+                width: 140,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image(
+                    image: CachedNetworkImageProvider(
+                      provider.lista[index].coverUrl.toString(),
+                      maxHeight: 180,
+                      maxWidth: 130,
+                    ),
+                    loadingBuilder: (context, child, progress) {
+                      if (progress == null) {
+                        return child;
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.grey,
+                        ),
+                      );
+                    },
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            );
+          }),
     );
   }
 
-  String? search(String query) {
-    if (_searchController.text.isEmpty) {
-      setState(() {
-        controller.getData(query: '');
-      });
-    } else {
-      controller.getData(query: _searchController.text);
-    }
-    return null;
+  Container carrouselSlider(MarvelController provider) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: CarouselSlider.builder(
+        itemCount: provider.lista.length,
+        options: CarouselOptions(
+          enlargeCenterPage: true,
+          height: 320,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 3),
+          reverse: false,
+          aspectRatio: 5.0,
+        ),
+        itemBuilder: (context, index, id) {
+          return (index <= 0)
+              ? Container()
+              : GestureDetector(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                    ),
+                    //ClipRRect for image border radius
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        provider.lista[index].coverUrl.toString(),
+                        width: 400,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailsPage(
+                                  data: provider.lista[index],
+                                )));
+                  },
+                );
+        },
+      ),
+    );
   }
 }
