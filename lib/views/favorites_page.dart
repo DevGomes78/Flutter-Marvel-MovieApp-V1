@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:marvel/constants/string_constants.dart';
 import 'package:marvel/controller/favorite_controler.dart';
 import 'package:provider/provider.dart';
-import '../data/models/marvel_models.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -16,6 +15,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<Favorites>(context);
+    print(provider.lista.length);
     return Scaffold(
       appBar: AppBar(
         title: const Text(StringConstants.favorites),
@@ -25,7 +25,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
          itemBuilder: (context,index){
         var lista = provider.lista[index];
          return ListTile(
-          title:  Text(lista.toString()),
+          title: Text(lista.toString()),
          );
          }),
     );

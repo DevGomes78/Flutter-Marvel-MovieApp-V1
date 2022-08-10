@@ -4,6 +4,7 @@ class MarvelModels extends ChangeNotifier {
   List<Data>? data;
   int? total;
 
+
   MarvelModels({
     this.data,
     this.total,
@@ -36,22 +37,23 @@ class Data extends ChangeNotifier {
   int? postCreditScenes;
   String? imdbId;
 
-  Data(
-      {this.id,
-      this.title,
-      this.releaseDate,
-      this.boxOffice,
-      this.duration,
-      this.overview,
-      this.coverUrl,
-      this.trailerUrl,
-      this.directedBy,
-      this.phase,
-      this.saga,
-      this.chronology,
-      this.postCreditScenes,
-      this.imdbId,
-     });
+  Data({
+    this.id,
+    this.title,
+    this.releaseDate,
+    this.boxOffice,
+    this.duration,
+    this.overview,
+    this.coverUrl,
+    this.trailerUrl,
+    this.directedBy,
+    this.phase,
+    this.saga,
+    this.chronology,
+    this.postCreditScenes,
+    this.imdbId,
+  });
+
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -69,4 +71,5 @@ class Data extends ChangeNotifier {
     postCreditScenes = json['post_credit_scenes'];
     imdbId = json['imdb_id'];
   }
+
 }

@@ -53,7 +53,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
           const SizedBox(height: 60),
           Text(
             StringConstants.titleText,
-            style: AppTextStyle.font28,
+            style: AppTextStyle.font22,
           ),
           const SizedBox(height: 40),
           searchBar(),
@@ -76,7 +76,6 @@ class _MarvelListPageState extends State<MarvelListPage> {
   }
 
   InkWell marvelList(BuildContext context, Data lista) {
-    Data provider = Provider.of<Data>(context);
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -133,7 +132,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
                             children: [
                               Text(
                                 lista.title.toString(),
-                                style: AppTextStyle.font26,
+                                style: AppTextStyle.font22,
                               ),
                               const SizedBox(height: 10),
                               Text(

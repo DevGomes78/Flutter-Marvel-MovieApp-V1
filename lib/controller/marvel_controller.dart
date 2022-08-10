@@ -21,9 +21,9 @@ class MarvelController extends ChangeNotifier {
                     query.toLowerCase(),
                   ))
               .toList();
+          notifyListeners();
         }
-        notifyListeners();
-        return lista;
+
       }
     } catch (e) {
       print('Erro ao acessar a Pagina: $e');

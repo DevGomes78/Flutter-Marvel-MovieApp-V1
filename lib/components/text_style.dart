@@ -6,8 +6,8 @@ class AppTextStyle{
     fontWeight:  FontWeight.bold,
     color: Colors.white,
   );
-  static TextStyle font26 = const TextStyle(
-    fontSize: 26,
+  static TextStyle font22 = const TextStyle(
+    fontSize: 22,
     color: Colors.white,
   );
   static TextStyle font28 = const TextStyle(
@@ -20,6 +20,11 @@ class AppTextStyle{
   );
   static TextStyle font25Bold = const TextStyle(
     fontSize: 25,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle font14Bold = const TextStyle(
+    fontSize: 14,
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
