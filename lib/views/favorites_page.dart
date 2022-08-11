@@ -10,22 +10,44 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-
   @override
   Widget build(BuildContext context) {
-    Favorites provider = Provider.of<Favorites>(context);
+    final provider = Provider.of<Favorites>(context);
+    print(provider.listFavorites.length);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritos'),
       ),
-      body:  ListView.builder(
-          itemCount: provider.lista.length,
-          itemBuilder: (context,index){
-            var lista = provider.lista[index];
-            return ListTile(
-              title:  Text(lista.toString()),
-            );
-          }),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Expanded(
+              child: GridView.builder(
+                  gridDelegate: const
+                  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.1,
+                    mainAxisSpacing: 5,
+                  ),
+                  itemCount: provider.listFavorites.length,
+                  itemBuilder: (context, index) {
+                    var lista = provider.listFavorites[index];
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Card(
+                        elevation: 5,
+                        child: Image.network(lista.coverUrl.toString(),
+                        fit: BoxFit.fill,
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

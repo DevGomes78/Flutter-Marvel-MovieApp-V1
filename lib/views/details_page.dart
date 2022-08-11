@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/components/text_style.dart';
 import 'package:marvel/constants/string_constants.dart';
-import 'package:marvel/views/marvel_listpage2.dart';
 import 'package:provider/provider.dart';
 import '../constants/service_constants.dart';
-import '../controller/favourites_controller.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
+import '../utils/routes.dart';
 
 class DetailsPage extends StatefulWidget {
   Data? data;
@@ -55,12 +54,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     Positioned(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MarvelListPage2(),
-                            ),
-                          );
+                          Navigator.pushNamed(context,
+                              Routes.marvelListPage2);
                         },
                         icon: const Icon(
                           Icons.arrow_back,
@@ -71,13 +66,11 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     Positioned(
                       right: 20,
-                      child: Consumer<Favorites>(
+                      child: Consumer<Data>(
                         builder: (context, provider, child) => IconButton(
                           onPressed: () {
-                            provider.toogleFavorite();
-                            provider.lista.add(
-                              widget.data!.title.toString(),
-                            );
+                         //   provider.toogleFavorite();
+                          //  provider.favoritosOnly(widget.data!.id.toString());
                           },
                           icon: Icon(
                             provider.isFavorite
@@ -89,12 +82,24 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                       ),
                     ),
+                    Positioned(
+                      left: 150,
+                      top: 100,
+                      child: InkWell(
+                        onTap: callVideoPlayer,
+                        child: const Icon(
+                          Icons.play_circle_outline,
+                          color: Colors.yellow,
+                          size: 65,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    const SizedBox(width: 60),
+                    const SizedBox(width: 110),
                     Text(
                       (DateFormat("yyyy").format(
                           DateTime.parse(widget.data!.releaseDate.toString()))),
@@ -141,16 +146,6 @@ class _DetailsPageState extends State<DetailsPage> {
                 const SizedBox(height: 20),
                 Text(widget.data!.overview.toString()),
                 const SizedBox(height: 15),
-                InkWell(
-                  onTap: callVideoPlayer,
-                  child: const Text(
-                    StringConstants.watchTheTrailer,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
               ],
             ),
           ),

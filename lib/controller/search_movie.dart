@@ -55,8 +55,8 @@ class SearchMovie extends SearchDelegate {
                           context,
                           MaterialPageRoute(
                               builder: (context) => DetailsPage(
-                                data: lista,
-                              )));
+                                    data: lista,
+                                  )));
                     },
                   );
                 });

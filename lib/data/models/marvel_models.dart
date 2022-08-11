@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class MarvelModels extends ChangeNotifier {
   List<Data>? data;
   int? total;
-
   MarvelModels({
     this.data,
     this.total,
@@ -71,8 +70,4 @@ class Data extends ChangeNotifier {
     imdbId = json['imdb_id'];
   }
 
-  void toogleFavorite() {
-    isFavorite = !isFavorite;
-    notifyListeners();
-  }
 }
