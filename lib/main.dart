@@ -11,9 +11,15 @@ import 'package:device_preview/device_preview.dart';
 import 'package:provider/provider.dart';
 import 'controller/favorite_controler.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => MyApp(), // Wrap your app
+      ),
+    );
+//void main() {
+// runApp(const MyApp());
+//}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
