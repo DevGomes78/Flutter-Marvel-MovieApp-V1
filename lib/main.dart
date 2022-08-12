@@ -11,12 +11,10 @@ import 'package:device_preview/device_preview.dart';
 import 'package:provider/provider.dart';
 import 'controller/favorite_controler.dart';
 
-
-
-
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -24,9 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context)=> MarvelController()),
-        ChangeNotifierProvider(create: (context)=>Data()),
-        ChangeNotifierProvider(create: (context)=>Favorites()),
+        ChangeNotifierProvider(create: (context) => MarvelController()),
+        ChangeNotifierProvider(create: (context) => Data()),
+        ChangeNotifierProvider(create: (context) => Favorites()),
       ],
       child: MaterialApp(
         useInheritedMediaQuery: true,
@@ -39,7 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           Routes.HOME: (context) => const HomePage(),
-          Routes.detailsPage: (context) => DetailsPage(data: null,),
+          Routes.detailsPage: (context) => DetailsPage(
+                data: null,
+              ),
           Routes.marvelListPage2: (context) => const MarvelListPage2(),
           Routes.favorites: (context) => const FavoritesPage(),
         },

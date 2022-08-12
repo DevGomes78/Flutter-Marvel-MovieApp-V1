@@ -28,4 +28,14 @@ class AppTextStyle{
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle font12Bold = const TextStyle(
+    fontSize: 12,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle font18 = const TextStyle(
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 }

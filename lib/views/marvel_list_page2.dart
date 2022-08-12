@@ -7,6 +7,7 @@ import '../constants/service_constants.dart';
 import '../constants/string_constants.dart';
 import '../controller/marvel_controller.dart';
 import '../controller/search_movie.dart';
+import '../data/models/marvel_models.dart';
 import '../utils/routes.dart';
 import 'details_page.dart';
 
@@ -18,7 +19,6 @@ class MarvelListPage2 extends StatefulWidget {
 }
 
 class _MarvelListPage2State extends State<MarvelListPage2> {
-  final TextEditingController _searchController = TextEditingController();
   late final MarvelController controller;
   bool isLoading = false;
   var lista;
@@ -50,7 +50,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
           elevation: 0,
           title: Text(
             StringConstants.titleText,
-            style: AppTextStyle.font22,
+            style: AppTextStyle.font22Bold,
           ),
           centerTitle: true,
           actions: [
@@ -89,13 +89,20 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
               children: [
                 const SizedBox(height: 20),
                 carrouselSlider(provider),
-                const SizedBox(height: 20),
-                Text(
-                  StringConstants.campeoesDeBilheteria,
-                  style: AppTextStyle.font22Bold,
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    StringConstants.assistaAgora,
+                    style: AppTextStyle.font22,
+                  ),
                 ),
+                const SizedBox(height: 10),
+                listMovie(provider),
                 const SizedBox(height: 20),
-                listMovie(provider)
+                Text('Atores principais ', style: AppTextStyle.font22),
+                const SizedBox(height: 15),
+                starsList(),
               ],
             ),
           ),
@@ -104,9 +111,94 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
     });
   }
 
+  Container starsList() {
+    return Container(
+      height: 150,
+      width: double.infinity,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('images/crisevans.jpg'),
+                radius: 40,
+              ),
+              SizedBox(height: 10),
+              Text('Cris'),
+              Text('Evans'),
+            ],
+          ),
+          const SizedBox(width: 20),
+          Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('images/scarlet.jpg'),
+                radius: 40,
+              ),
+              SizedBox(height: 10),
+              Text('Scaret'),
+              Text('Jahansen'),
+            ],
+          ),
+          const SizedBox(width: 10),
+          Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('images/crishenswolf.jpg'),
+                radius: 40,
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Chris',
+              ),
+              Text('Hemsworth'),
+            ],
+          ),
+          const SizedBox(width: 10),
+          Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('images/Robert_Downeyjpg.jpg'),
+                radius: 40,
+              ),
+              SizedBox(height: 10),
+              Text('Robert '),
+              Text(' Downey Jr.'),
+            ],
+          ),
+          const SizedBox(width: 10),
+          Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('images/rufallo.jpg'),
+                radius: 40,
+              ),
+              SizedBox(height: 10),
+              Text('Mark '),
+              Text('Rufallo.'),
+            ],
+          ),
+          const SizedBox(width: 10),
+          Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('images/samueljpg.jpg'),
+                radius: 40,
+              ),
+              SizedBox(height: 10),
+              Text('Samuel '),
+              Text('L Jackson'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   Container listMovie(MarvelController provider) {
     return Container(
-      height: 310,
+      height: 240,
       width: double.infinity,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -118,7 +210,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   height: 200,
-                  width: 300,
+                  width: 210,
                   child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -134,7 +226,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                         image: CachedNetworkImageProvider(
                           provider.lista[index].coverUrl.toString(),
                           maxHeight: 260,
-                          maxWidth: 180,
+                          maxWidth: 200,
                         ),
                         loadingBuilder: (context, child, progress) {
                           if (progress == null) {
@@ -155,24 +247,23 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     provider.lista[index].title.toString(),
-                    style: AppTextStyle.font22,
+                    style: AppTextStyle.font12Bold,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    'ação/ aventura',
-                    style: AppTextStyle.font15,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 25,
-                    width: 50,
-                    child: Image.asset(ServiceConstants.imageAsset),
-                  ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 25,
+                        width: 50,
+                        child: Image.asset(ServiceConstants.imageAsset),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text('8.4', style: AppTextStyle.font15),
+                  ],
                 ),
               ],
             );
@@ -188,7 +279,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
         options: CarouselOptions(
           enlargeCenterPage: true,
           initialPage: 2,
-          height: 310,
+          height: 250,
           autoPlay: true,
           autoPlayInterval: const Duration(seconds: 3),
           reverse: false,

@@ -71,5 +71,11 @@ class Data extends ChangeNotifier {
     postCreditScenes = json['post_credit_scenes'];
     imdbId = json['imdb_id'];
   }
-
+  List<String> notas =[
+    '8.5',
+    '7.9',
+    '8.4',
+    '7.7',
+    '7.5',
+  ];
 }
