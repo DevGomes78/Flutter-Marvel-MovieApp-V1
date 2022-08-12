@@ -87,7 +87,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 carrouselSlider(provider),
                 const SizedBox(height: 10),
                 Padding(
@@ -99,7 +99,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                 ),
                 const SizedBox(height: 10),
                 listMovie(provider),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 Text('Atores principais ', style: AppTextStyle.font22),
                 const SizedBox(height: 15),
                 starsList(),
@@ -198,7 +198,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
 
   Container listMovie(MarvelController provider) {
     return Container(
-      height: 240,
+      height: 220,
       width: double.infinity,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -209,7 +209,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
               children: [
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 5),
-                  height: 200,
+                  height: 180,
                   width: 210,
                   child: InkWell(
                     onTap: () {
@@ -279,7 +279,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
         options: CarouselOptions(
           enlargeCenterPage: true,
           initialPage: 2,
-          height: 250,
+          height: 230,
           autoPlay: true,
           autoPlayInterval: const Duration(seconds: 3),
           reverse: false,
