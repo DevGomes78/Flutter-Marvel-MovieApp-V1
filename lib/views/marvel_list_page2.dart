@@ -99,7 +99,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                 ),
                 const SizedBox(height: 10),
                 listMovie(provider),
-                const SizedBox(height: 15),
+                const SizedBox(height: 10),
                 Text('Atores principais ', style: AppTextStyle.font22),
                 const SizedBox(height: 15),
                 starsList(),
@@ -119,40 +119,55 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
         scrollDirection: Axis.horizontal,
         children: [
           Column(
-            children: const [
+            children: [
               CircleAvatar(
                 backgroundImage: AssetImage('images/crisevans.jpg'),
                 radius: 40,
               ),
               SizedBox(height: 10),
-              Text('Cris'),
-              Text('Evans'),
+              Container(
+                alignment: Alignment.topCenter,
+                height: 50,
+                width: 50,
+                child: Text(
+                  'Cris Evans',
+                  overflow: TextOverflow.clip,
+                ),
+              ),
             ],
           ),
           const SizedBox(width: 20),
           Column(
-            children: const [
+            children:  [
               CircleAvatar(
                 backgroundImage: AssetImage('images/scarlet.jpg'),
                 radius: 40,
               ),
               SizedBox(height: 10),
-              Text('Scaret'),
-              Text('Jahansen'),
+              Container(
+                  height: 50,
+                  width: 70,
+                  child:
+              Text('Scaret Jahansen')),
+
             ],
           ),
           const SizedBox(width: 10),
           Column(
-            children: const [
+            children: [
               CircleAvatar(
                 backgroundImage: AssetImage('images/crishenswolf.jpg'),
                 radius: 40,
               ),
               SizedBox(height: 10),
-              Text(
-                'Chris',
+              Container(
+                height: 50,
+                width: 80,
+                child: Text(
+                  'Chris Hemsworth',
+                ),
               ),
-              Text('Hemsworth'),
+
             ],
           ),
           const SizedBox(width: 10),
@@ -248,6 +263,7 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                   child: Text(
                     provider.lista[index].title.toString(),
                     style: AppTextStyle.font12Bold,
+                    overflow: TextOverflow.clip,
                   ),
                 ),
                 Row(
@@ -261,7 +277,6 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
                         child: Image.asset(ServiceConstants.imageAsset),
                       ),
                     ),
-                    const SizedBox(width: 10),
                     Text('8.4', style: AppTextStyle.font15),
                   ],
                 ),
@@ -319,4 +334,5 @@ class _MarvelListPage2State extends State<MarvelListPage2> {
       ),
     );
   }
+
 }

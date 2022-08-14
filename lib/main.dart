@@ -43,9 +43,6 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           Routes.HOME: (context) => const HomePage(),
-          Routes.detailsPage: (context) => DetailsPage(
-                data: null,
-              ),
           Routes.marvelListPage2: (context) => const MarvelListPage2(),
           Routes.favorites: (context) => const FavoritesPage(),
         },

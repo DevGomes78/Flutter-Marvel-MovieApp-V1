@@ -1,49 +1,24 @@
-
 import 'package:flutter/material.dart';
+import 'package:marvel/data/models/marvel_models.dart';
 
-class Favorites extends ChangeNotifier{
-  List<String> lista = [];
+class Favorites extends ChangeNotifier {
+  List<Data> listFavorites = [];
+  late bool isFavorite;
 
+  Favorites({this.isFavorite = false});
 
-  int? id;
-  String? title;
-  String? releaseDate;
-  String? boxOffice;
-  int? duration;
-  String? overview;
-  String? coverUrl;
-  String? trailerUrl;
-  String? directedBy;
-  int? phase;
-  String? saga;
-  int? chronology;
-  int? postCreditScenes;
-  String? imdbId;
-  bool isFavorite = false;
-
-  Favorites({
-  this.id,
-  this.title,
-  this.releaseDate,
-  this.boxOffice,
-  this.duration,
-  this.overview,
-  this.coverUrl,
-  this.trailerUrl,
-  this.directedBy,
-  this.phase,
-  this.saga,
-  this.chronology,
-  this.postCreditScenes,
-  this.imdbId,
-  this.isFavorite = false,
-  });
-
-
-  void favoritosOnly(String value) {
-    lista.add(value);
+  void favoritosOnly(Data data) {
+    if (listFavorites.contains(data)) {
+    } else {
+      listFavorites.add(data);
+      notifyListeners();
+    }
+  }
+  void removeFavorites(Data data) {
+    listFavorites.remove(data);
     notifyListeners();
   }
+
   void toogleFavorite() {
     isFavorite = !isFavorite;
     notifyListeners();

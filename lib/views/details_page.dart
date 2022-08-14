@@ -55,8 +55,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Positioned(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(context,
-                              Routes.marvelListPage2);
+                          Navigator.pushNamed(context, Routes.marvelListPage2);
                         },
                         icon: const Icon(
                           Icons.arrow_back,
@@ -71,7 +70,19 @@ class _DetailsPageState extends State<DetailsPage> {
                         builder: (context, provider, child) => IconButton(
                           onPressed: () {
                             provider.toogleFavorite();
-                            provider.favoritosOnly(widget.data!.id.toString());
+                            if (provider.isFavorite) {
+                              provider.favoritosOnly(widget.data!);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Adicionado aos Favoritos!')));
+                            } else {
+                              provider.removeFavorites(widget.data!);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Removido dos Favoritos!')));
+                            }
                           },
                           icon: Icon(
                             provider.isFavorite
@@ -83,7 +94,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                       ),
                     ),
-                     Positioned(
+                    Positioned(
                       left: 170,
                       top: 100,
                       child: InkWell(
