@@ -53,7 +53,7 @@ class _MarvelListPageState extends State<MarvelListPage> {
               const SizedBox(height: 60),
               Text(
                 StringConstants.titleText,
-                style: AppTextStyle.font20,
+                style: AppTextStyle.font22,
               ),
               const SizedBox(height: 40),
               searchBar(),

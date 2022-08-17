@@ -69,5 +69,4 @@ class Data extends ChangeNotifier {
     postCreditScenes = json['post_credit_scenes'];
     imdbId = json['imdb_id'];
   }
-
 }

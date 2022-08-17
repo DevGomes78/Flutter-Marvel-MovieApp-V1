@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/components/text_style.dart';
 import 'package:marvel/constants/string_constants.dart';
+import 'package:marvel/controller/favourites_controller.dart';
 import 'package:provider/provider.dart';
-import '../constants/service_constants.dart';
+import '../constants/error_constants.dart';
+import '../constants/image_constants.dart';
 import '../data/models/marvel_models.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
@@ -66,11 +68,11 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     Positioned(
                       right: 20,
-                      child: Consumer<Data>(
+                      child: Consumer<Favorites>(
                         builder: (context, provider, child) => IconButton(
                           onPressed: () {
-                         //   provider.toogleFavorite();
-                          //  provider.favoritosOnly(widget.data!.id.toString());
+                            provider.toogleFavorite();
+                            provider.favoritosOnly(widget.data!);
                           },
                           icon: Icon(
                             provider.isFavorite
@@ -83,7 +85,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                     Positioned(
-                      left: 150,
+                      left: 170,
                       top: 100,
                       child: InkWell(
                         onTap: callVideoPlayer,
@@ -137,7 +139,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   alignment: Alignment.center,
                   height: 45,
                   width: double.infinity,
-                  child: Image.asset(ServiceConstants.imageAsset),
+                  child: Image.asset(ImageConstants.imageAsset),
                 ),
                 Text(
                   StringConstants.sumary,
@@ -174,7 +176,7 @@ class _DetailsPageState extends State<DetailsPage> {
         forceWebView: true,
       );
     } else {
-      throw 'Could not launch $url';
+      throw ErrorConstants.VideoNaoDisponivel + url;
     }
   }
 }

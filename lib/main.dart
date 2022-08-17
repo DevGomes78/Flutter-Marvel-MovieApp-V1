@@ -10,15 +10,15 @@ import 'controller/favourites_controller.dart';
 import 'controller/marvel_controller.dart';
 import 'data/models/marvel_models.dart';
 import 'package:device_preview/device_preview.dart';
-//void main() => runApp(
-  //    DevicePreview(
-     //   enabled: !kReleaseMode,
-       //builder: (context) => MyApp(), // Wrap your app
-     //),
-    //);
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(
+     DevicePreview(
+        enabled: !kReleaseMode,
+       builder: (context) => MyApp(), // Wrap your app
+     ),
+    );
+//void main() {
+  //runApp(const MyApp());
+//}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

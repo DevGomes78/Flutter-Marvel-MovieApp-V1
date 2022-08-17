@@ -15,7 +15,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     final provider = Provider.of<Favorites>(context);
     print(provider.listFavorites.length);
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Colors.transparent,
         title: const Text('Favoritos'),
       ),
       body: Padding(

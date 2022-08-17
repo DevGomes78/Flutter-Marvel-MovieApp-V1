@@ -10,6 +10,8 @@ class StringConstants{
   static const favorites = 'Favoritos';
   static const Myfavorites = 'Meus Favoritos';
   static const assistaAgora = 'Assista agora';
+  static const atoresPrincipais ='Atores principais';
+
 
 
 }

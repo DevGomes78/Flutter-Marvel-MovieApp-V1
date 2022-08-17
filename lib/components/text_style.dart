@@ -6,16 +6,12 @@ class AppTextStyle{
     fontWeight:  FontWeight.bold,
     color: Colors.white,
   );
-  static TextStyle font26 = const TextStyle(
-    fontSize: 26,
+  static TextStyle font22 = const TextStyle(
+    fontSize: 22,
     color: Colors.white,
   );
-  static TextStyle font18 = const TextStyle(
-    fontSize: 18,
-    color: Colors.white,
-  );
-  static TextStyle font20 = const TextStyle(
-    fontSize: 20,
+  static TextStyle font28 = const TextStyle(
+    fontSize: 28,
     color: Colors.white,
   );
   static TextStyle font15 = const TextStyle(
@@ -24,6 +20,21 @@ class AppTextStyle{
   );
   static TextStyle font25Bold = const TextStyle(
     fontSize: 25,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle font14Bold = const TextStyle(
+    fontSize: 14,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle font12Bold = const TextStyle(
+    fontSize: 11,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle font18 = const TextStyle(
+    fontSize: 18,
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
