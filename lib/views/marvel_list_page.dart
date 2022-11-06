@@ -6,7 +6,7 @@ import 'package:marvel/views/shimer_page.dart';
 import 'package:provider/provider.dart';
 import '../components/text_style.dart';
 import '../constants/string_constants.dart';
-import '../controller/marvel_controller.dart';
+import '../service/marvelapi_service.dart';
 
 class MarvelListPage extends StatefulWidget {
   const MarvelListPage({Key? key}) : super(key: key);

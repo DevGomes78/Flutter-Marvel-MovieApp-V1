@@ -4,7 +4,7 @@ import 'package:marvel/utils/routes.dart';
 import 'package:marvel/views/favorites_page.dart';
 import 'package:marvel/views/home_page.dart';
 import 'package:marvel/views/marvel_list_page.dart';
-import 'controller/marvel_controller.dart';
+import 'service/marvelapi_service.dart';
 import 'data/models/marvel_models.dart';
 import 'package:provider/provider.dart';
 import 'controller/favorite_controler.dart';
