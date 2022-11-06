@@ -55,7 +55,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     Positioned(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, Routes.marvelListPage2);
+                          Navigator.pushNamed(context, Routes.marvelListPage);
                         },
                         icon: const Icon(
                           Icons.arrow_back,
