@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvel/constants/string_constants.dart';
-import 'package:marvel/controller/marvel_controller.dart';
+import 'package:marvel/service/marvelapi_service.dart';
 import 'package:marvel/views/details_page.dart';
 import '../data/models/marvel_models.dart';
 
