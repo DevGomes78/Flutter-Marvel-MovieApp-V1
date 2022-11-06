@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:marvel/data/models/marvel_models.dart';
 import 'package:marvel/views/details_page.dart';
 import 'package:marvel/views/shimer_page.dart';
 import 'package:provider/provider.dart';
@@ -125,16 +124,35 @@ class _MarvelListPageState extends State<MarvelListPage> {
                               horizontal: 20,
                             ),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   lista.title.toString(),
-                                  style: AppTextStyle.font22,
+                                  style: AppTextStyle.font14Bold,
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
                                   (DateFormat("yyyy").format(DateTime.parse(
                                       lista.releaseDate.toString()))),
                                 ),
+                                const SizedBox(height: 10),
+                                const Text(
+                                  'Action | adventure',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: const [
+                                    Icon(Icons.star,color: Colors.amber),
+                                    Icon(Icons.star,color: Colors.amber),
+                                    Icon(Icons.star,color: Colors.amber),
+                                    Icon(Icons.star,color: Colors.amber),
+                                    Icon(Icons.star,color: Colors.grey),
+                                  ],
+                                )
                               ],
                             ),
                           ),
