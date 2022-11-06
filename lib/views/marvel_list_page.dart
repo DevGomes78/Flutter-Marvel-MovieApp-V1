@@ -44,117 +44,121 @@ class _MarvelListPageState extends State<MarvelListPage> {
   Widget build(BuildContext context) {
     MarvelController provider = Provider.of<MarvelController>(context);
     return Scaffold(
-
-        body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 60),
-          Text(
-            StringConstants.titleText,
-            style: AppTextStyle.font22,
-          ),
-          const SizedBox(height: 40),
-          searchBar(),
-          Expanded(
-              child: ListView.builder(
-                  itemCount: isLoading ? 2 : provider.lista.length,
-                  itemBuilder: (context, index) {
-                    if (isLoading) {
-                      return const Skeleton().buildListView();
-                    } else {
-                      provider.lista.isEmpty
-                          ? const Center(child: CircularProgressIndicator())
-                          : lista = provider.lista[index];
-                      return marvelList(context, lista);
-                    }
-                  })),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 60),
+            _titleText(),
+            const SizedBox(height: 40),
+            _searchBar(),
+            _marvelList(provider),
+          ],
+        ),
       ),
-    ));
-  }
-
-  InkWell marvelList(BuildContext context, Data lista) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailsPage(
-                      data: lista,
-                    )));
-      },
-
-         child:   ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Card(
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          height: 180,
-                            color: Colors.black54,
-                          child: Image(
-                            image: CachedNetworkImageProvider(
-                              lista.coverUrl.toString(),
-                              maxHeight: 180,
-                              maxWidth: 130,
-                            ),
-                            loadingBuilder: (context, child, progress) {
-                              if (progress == null) {
-                                return child;
-                              }
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.grey,
-                                ),
-                              );
-                            },
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                          ),
-                          child: Column(
-                            children: [
-                              Text(
-                                lista.title.toString(),
-                                style: AppTextStyle.font22,
-                              ),
-                              const SizedBox(height: 10),
-                              Text(
-                                (DateFormat("yyyy").format(
-                                    DateTime.parse(
-                                        lista.releaseDate.toString()))),
-                               ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-
     );
   }
 
-  TextField searchBar() {
+  _marvelList(MarvelController provider) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: isLoading ? 2 : provider.lista.length,
+        itemBuilder: (context, index) {
+          if (isLoading) {
+            return const Skeleton().buildListView();
+          } else {
+            provider.lista.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : lista = provider.lista[index];
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsPage(
+                      data: lista,
+                    ),
+                  ),
+                );
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25),
+                child: Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Container(
+                            height: 180,
+                            color: Colors.black54,
+                            child: Image(
+                              image: CachedNetworkImageProvider(
+                                lista.coverUrl.toString(),
+                                maxHeight: 180,
+                                maxWidth: 130,
+                              ),
+                              loadingBuilder: (context, child, progress) {
+                                if (progress == null) {
+                                  return child;
+                                }
+                                return const Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.grey,
+                                  ),
+                                );
+                              },
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  lista.title.toString(),
+                                  style: AppTextStyle.font22,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  (DateFormat("yyyy").format(DateTime.parse(
+                                      lista.releaseDate.toString()))),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  _titleText() {
+    return Text(
+      StringConstants.titleText,
+      style: AppTextStyle.font22,
+    );
+  }
+
+  _searchBar() {
     return TextField(
       onChanged: search,
       decoration: InputDecoration(
